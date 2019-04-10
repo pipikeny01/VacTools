@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacTools", "VacTools\VacTools.csproj", "{C0F20C2F-A5AD-4500-BC93-B98774FE766C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFA4BD45-B25A-4A0F-9305-FFA3D2E2BCE1}
+	EndGlobalSection
+EndGlobal
