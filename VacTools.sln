@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacTools", "VacTools\VacTools.csproj", "{C0F20C2F-A5AD-4500-BC93-B98774FE766C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacTools", "..\..\..\..\..\AProject\2019\退輔會\VacWebSiteXXX\VacTools\VacTools.csproj", "{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacToolsTests", "..\..\..\..\..\AProject\2019\退輔會\VacWebSiteXXX\VacToolsTests\VacToolsTests.csproj", "{F91052FF-168C-4087-9EAB-524A42FD893A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0F20C2F-A5AD-4500-BC93-B98774FE766C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91052FF-168C-4087-9EAB-524A42FD893A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91052FF-168C-4087-9EAB-524A42FD893A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91052FF-168C-4087-9EAB-524A42FD893A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91052FF-168C-4087-9EAB-524A42FD893A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
