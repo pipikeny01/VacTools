@@ -18,10 +18,10 @@ namespace VacWebSiteTools
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public List<PayDanTitle> GetPayDanTitles(DateTime startDate, DateTime endDate)
+        public List<PayDanWeeks> GetPayDanTitles(DateTime startDate, DateTime endDate)
         {
+            var titles = new List<PayDanWeeks>();
             var dateHelper = new DateHelper();
-            var titles = new List<PayDanTitle>();
             var totalWeek = dateHelper.GetTotalWeekCount(startDate, endDate);
 
             //開始的日期要先知道是星期幾,讓第一周的結束日期去扣掉
@@ -30,9 +30,7 @@ namespace VacWebSiteTools
             for (int i = 0; i < totalWeek; i++)
             {
                 var sDate = startDate;
-                //sDate = startDate.AddDays(i * 7);
-
-                var title = new PayDanTitle
+                var title = new PayDanWeeks
                 {
                     StarDate = sDate,
                     EndDate = (i == 0) ? sDate.AddDays(6 - startDateWeek) : sDate.AddDays(6),
@@ -40,7 +38,6 @@ namespace VacWebSiteTools
                 };
 
                 startDate = title.EndDate.AddDays(1);
-
                 titles.Add(title);
             }
 

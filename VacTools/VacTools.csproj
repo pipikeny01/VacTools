@@ -44,6 +44,8 @@
     <Compile Include="DateHelper.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="interface\IDateHelper.cs" />
+    <Compile Include="IPayDanHelper.cs" />
+    <Compile Include="OTD\Age.cs" />
     <Compile Include="PayDanHelper_v1.cs" />
     <Compile Include="PayDanHelper.cs" />
     <Compile Include="PayDanTitle.cs" />

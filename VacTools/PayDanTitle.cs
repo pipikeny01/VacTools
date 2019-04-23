@@ -5,7 +5,7 @@ namespace VacWebSiteTools
     /// <summary>
     /// 配當表的表頭資料結構
     /// </summary>
-    public class PayDanTitle
+    public class PayDanWeeks
     {
         public string Week { set; get; }
 

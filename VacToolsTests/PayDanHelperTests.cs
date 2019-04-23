@@ -24,7 +24,7 @@ namespace VacWebSiteTools.Tests
             var expectedstartDate = new DateTime(2018, 1, 21);
             var expectedEndDate = new DateTime(2018, 1, 27);
             //Act
-            var result = payDanHelper.GetPayDanTitles(startDate, endDate);
+            var result = payDanHelper.GetPayDanWeeks(startDate, endDate);
             //Assert
             Assert.AreEqual(expectedstartDate, result[1].StarDate);
             Assert.AreEqual(expectedEndDate, result[1].EndDate);
@@ -33,7 +33,7 @@ namespace VacWebSiteTools.Tests
 
 
         [TestMethod()]
-        public void GetPayDanTitlesTest_呼叫帶入日期20180117和20180704取得集合是24個() //其實這個也不用測了
+        public void GetPayDanTitlesTest_呼叫帶入日期20180117和20180704取得集合是25個() //其實這個也不用測了
         {
             //使用mock framework    Rhino.Mocks
             //Arrange
@@ -44,14 +44,14 @@ namespace VacWebSiteTools.Tests
 
             var startDate = new DateTime(2018, 1, 17);
             var endDate = new DateTime(2018, 7, 4);
-            var expectedListCount = 24;
+            var expectedListCount = 25;
 
             //mock 使用要使用的方法 , 並回傳值 , 這時候帶入的參數是多少不重要 ,因為mock物件本身根本沒有邏輯運算
-            stubDateHelper.Stub(p => p.GetTotalWeekCount(startDate, endDate)).Return(24);
+            stubDateHelper.Stub(p => p.GetTotalWeekCount(startDate, endDate)).Return(25);
             stubDateHelper.Stub(p => p.GetWeekOfDate(startDate)).Return(3);
 
             //Act
-            var result = payDanHelper.GetPayDanTitles(startDate,endDate);
+            var result = payDanHelper.GetPayDanWeeks(startDate,endDate);
             //Assert
             Assert.AreEqual(expectedListCount, result.Count);
 
@@ -68,17 +68,17 @@ namespace VacWebSiteTools.Tests
             var startDate = new DateTime(2018, 1, 17);
             var endDate = new DateTime(2018, 7, 4);
             var expectedstartDate = new DateTime(2018, 1, 21);
-            var expectedEndDate = new DateTime(2018, 1, 27);
+            var expectedEndDate = new DateTime(2018, 7, 4);
 
-            mock.GetTotalWeekCount(startDate, endDate).Returns(24);
+            mock.GetTotalWeekCount(startDate, endDate).Returns(25);
             mock.GetWeekOfDate(startDate).Returns(3);
 
             //Act
-            var result = payDanHelper.GetPayDanTitles(startDate, endDate);
+            var result = payDanHelper.GetPayDanWeeks(startDate, endDate);
 
             //Assert
             Assert.AreEqual(expectedstartDate, result[1].StarDate);
-            Assert.AreEqual(expectedEndDate, result[1].EndDate);
+            Assert.AreEqual(expectedEndDate, result[24].EndDate);
 
         }
 

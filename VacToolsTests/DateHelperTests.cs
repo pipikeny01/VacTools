@@ -12,21 +12,35 @@ namespace VacWebSiteTools.Tests
     public class DateHelperTests
     {
         [TestMethod()]
-        public void GetTotalWeekCountTest_測試日期區間共幾周_應回傳24()
+        public void GetTotalWeekCountTest_測試20180117到20180704區間會有25周()
         {
             //Arrange
             var dateHelper = new DateHelper();
             var sdate = new DateTime(2018, 1, 17);
             var edate = new DateTime(2018, 7, 4);
-            var expected = 24;
+            var expected = 25;
             //Act
-            var result = dateHelper.GetTotalWeekCount(sdate,edate);
+            var result = dateHelper.GetTotalWeekCount(sdate, edate);
             //Assert
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod()]
-        public void GetWeekOfDateTest_測試帶入201801017日期應該要回傳星期3()
+        public void GetTotalWeekCountTest_測試20190101到20190415區間會有16周()
+        {
+            //Arrange
+            var dateHelper = new DateHelper();
+            var sdate = new DateTime(2019, 1, 1);
+            var edate = new DateTime(2019, 4, 15);
+            var expected = 16;
+            //Act
+            var result = dateHelper.GetTotalWeekCount(sdate, edate);
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod()]
+        public void GetWeekOfDateTest_測試帶入201801017日期要回傳星期3()
         {
             //Arrange
             var dateHelper = new DateHelper();
@@ -77,5 +91,15 @@ namespace VacWebSiteTools.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod()]
+        public void CalculateAgeTest_測試傳入19810708及20190415日期回傳37年()
+        {
+            var dateHelper = new DateHelper();
+            var start = new DateTime(1981, 7, 8);
+            var end = new DateTime(2019, 4, 15);
+            var expected = 37;
+            var result = dateHelper.CalculateAge(start, end);
+            Assert.AreEqual(expected, result.Years);
+        }
     }
 }
