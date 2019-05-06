@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,7 +12,6 @@ namespace aiet.Base
     /// </summary>
     public abstract class BaseTable : myDB
     {
-        protected DataView listName;
         protected ListItemCollection _params = new ListItemCollection();
         protected ListItem[] _items;
         protected ListItemCollection _itemsParams;
@@ -24,6 +22,8 @@ namespace aiet.Base
         public string pk = "aid";
 
         #region property
+
+        protected DataView listName { set; get; }
 
         /// <summary>
         /// 提供給listitem欄位名稱
@@ -57,8 +57,6 @@ namespace aiet.Base
         /// </summary>
         public bool itemConcat = true;
 
-
-
         /// <summary>
         /// items 屬性 查詢參數設定
         /// </summary>
@@ -80,40 +78,63 @@ namespace aiet.Base
         {
             get
             {
-                if (_items == null)
-                {
-                    if (dfs != null)
-                    {
-                        DataView listName;
-                        if (string.IsNullOrEmpty(ItemsSqlString))
-                        {
-                            listName = this.selectSQL(string.Format("SELECT {0} as NO,{1} as  NAME FROM {2} where 1=1  {3} ", dfs.DataValue, dfs.DataText, TableName, ItemsWhereString), ItemsParams);
-                            listName.Sort = "NO";
-                        }
-                        else
-                        {
-                            listName = this.selectSQL(ItemsSqlString, ItemsParams);
-                        }
+                if (_items != null) return _items;
+                if (dfs == null) throw new Exception("dfs尚未初始化並設定");
 
-                        _items = new ListItem[listName.Count + 1];
-                        ListItem li = new ListItem(OptionText, "");
-                        _items.SetValue(li, 0);
-                        for (int i = 0; i < listName.Count; i++)
-                        {
-                            if (itemConcat)
-                            {
-                                li = new ListItem(string.Concat(listName[i]["NO"].ToString(), " - ", listName[i]["NAME"].ToString()), listName[i]["NO"].ToString());
-                            }
-                            else
-                            {
-                                li = new ListItem(listName[i]["NAME"].ToString(), listName[i]["NO"].ToString());
-                            }
-                            _items.SetValue(li, i + 1);
-                        }
+                var itemsDataView = GetItemsDataView();
+
+                _items = new ListItem[itemsDataView.Count + 1];
+                var li = new ListItem(OptionText, "");
+                _items.SetValue(li, 0);
+                for (var i = 0; i < itemsDataView.Count; i++)
+                {
+                    if (itemConcat)
+                    {
+                        li = SetItemsStringContact(itemsDataView, i);
                     }
+                    else
+                    {
+                        li = new ListItem(itemsDataView[i]["NAME"].ToString(), itemsDataView[i]["NO"].ToString());
+                    }
+                    _items.SetValue(li, i + 1);
                 }
                 return _items;
             }
+        }
+
+        /// <summary>
+        /// 取得Items DataView , 使用ItemsSqlString是否有值當條件
+        /// </summary>
+        /// <returns></returns>
+        protected virtual DataView GetItemsDataView()
+        {
+            DataView itemsDataView;
+            if (string.IsNullOrEmpty(ItemsSqlString))
+            {
+                itemsDataView = selectSQL(
+                    SetItemsDataViewSql(), ItemsParams);
+
+                itemsDataView.Sort =itemsDataView.ToTable().Columns[0].ColumnName;
+            }
+            else
+            {
+                itemsDataView = selectSQL(ItemsSqlString, ItemsParams);
+            }
+
+            return itemsDataView;
+        }
+
+        protected virtual string SetItemsDataViewSql()
+        {
+            return string.Format("SELECT {0} as NO,{1} as  NAME FROM {2} where 1=1  {3} ", dfs.DataValue, dfs.DataText,
+                TableName, ItemsWhereString);
+        }
+
+        protected virtual ListItem SetItemsStringContact(DataView itemsDataView, int i)
+        {
+            var li = new ListItem(string.Concat(itemsDataView[i]["NO"].ToString(), " - ", itemsDataView[i]["NAME"].ToString()),
+                itemsDataView[i]["NO"].ToString());
+            return li;
         }
 
         /// <summary>
@@ -250,8 +271,8 @@ namespace aiet.Base
         {
             this.selectText = string.Format("SELECT * FROM {0} ", TableName);
             return this.selectSQL();
-
         }
+
         /// <summary>
         /// 檢查是否存在
         /// </summary>
@@ -465,7 +486,7 @@ where RowIndex between cast( @starRowIndex as int) +1  and cast( @starRowIndex a
         /// <param name="param"></param>
         /// <param name="selectTotal">查詢筆數</param>
         /// <returns></returns>
-        public DataModel AddPagerScriptOther(string sql, int pageIndex, int pageSize, ListItemCollection param, bool selectTotal = true, string otherSql = "" )
+        public DataModel AddPagerScriptOther(string sql, int pageIndex, int pageSize, ListItemCollection param, bool selectTotal = true, string otherSql = "")
         {
             var db = new myDB();
             int start = pageIndex * pageSize;
@@ -497,8 +518,8 @@ where RowIndex between cast( @starRowIndex as int) +1  and cast( @starRowIndex a
                 End = dv.Count > 0 ? Int32.Parse(dv[dv.Count - 1]["RowIndex"].ToString()) >= total : true  //如果最後剛好取五筆 , 還是會為false , 比較好的作法是用總筆數去算
             };
         }
-
     }
+
     /// <summary>
     /// 提供給listitem欄位名稱
     /// </summary>
@@ -536,5 +557,4 @@ where RowIndex between cast( @starRowIndex as int) +1  and cast( @starRowIndex a
             get { return _DataValue; }
         }
     }
-
 }

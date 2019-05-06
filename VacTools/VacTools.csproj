@@ -54,12 +54,14 @@
   <ItemGroup>
     <Compile Include="DateHelper.cs" />
     <Compile Include="Demo.cs" />
+    <Compile Include="Factory\RepositoryFactory.cs" />
     <Compile Include="interface\IDateHelper.cs" />
     <Compile Include="IPayDanHelper.cs" />
     <Compile Include="OTD\Age.cs" />
     <Compile Include="PayDanHelper_v1.cs" />
     <Compile Include="PayDanHelper.cs" />
     <Compile Include="PayDanTitle.cs" />
+    <Compile Include="Repository\clsEducation_level.cs" />
     <Compile Include="VacTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSiteClass\BaseTable.cs" />
