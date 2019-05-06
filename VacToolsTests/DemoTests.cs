@@ -35,5 +35,17 @@ namespace VacWebSiteTools.Tests
             Assert.AreEqual(excepted, result);
         }
 
+        [TestMethod()]
+        public void Fun3Test＿應該回傳３()
+        {
+            //Arrange
+            var demo = new Demo();
+            var excepted = 3;
+            //Act
+            var result = demo.Fun3();
+            //Assert
+            Assert.AreEqual(excepted, result);
+
+        }
     }
 }

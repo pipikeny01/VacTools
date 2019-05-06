@@ -31,8 +31,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.16.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\AProject\2019\退輔會\VacWebSiteXXX\VacWebSite\Bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StyleCop, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\AProject\2019\退輔會\VacWebSiteXXX\packages\StyleCop.6.1.0\lib\net40\StyleCop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +62,24 @@
     <Compile Include="PayDanTitle.cs" />
     <Compile Include="VacTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebSiteClass\BaseTable.cs" />
+    <Compile Include="WebSiteClass\logError.cs" />
+    <Compile Include="WebSiteClass\logEvent.cs" />
+    <Compile Include="WebSiteClass\Model.cs" />
+    <Compile Include="WebSiteClass\myDB.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\AIET\開發基本架構\aietTools\aietTools.csproj">
+      <Project>{ce4902e3-edcb-44cc-9a23-8f237e1ce9ad}</Project>
+      <Name>aietTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\AIET\開發基本架構\Aiet_MySQL\Aiet_MySQL.csproj">
+      <Project>{94107c72-5277-4d5a-8e42-92c27cf16715}</Project>
+      <Name>Aiet_MySQL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

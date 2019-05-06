@@ -18,5 +18,11 @@ namespace VacWebSiteTools
         {
             return _baseNumber + 8;
         }
+
+        public object Fun3()
+        {
+            return _baseNumber + 1;
+        }
+
     }
 }
