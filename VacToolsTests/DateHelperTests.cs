@@ -91,15 +91,5 @@ namespace VacWebSiteTools.Tests
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod()]
-        public void CalculateAgeTest_測試傳入19810708及20190415日期回傳37年()
-        {
-            var dateHelper = new DateHelper();
-            var start = new DateTime(1981, 7, 8);
-            var end = new DateTime(2019, 4, 15);
-            var expected = 37;
-            var result = dateHelper.CalculateAge(start, end);
-            Assert.AreEqual(expected, result.Years);
-        }
     }
 }
