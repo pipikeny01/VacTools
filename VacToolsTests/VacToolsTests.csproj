@@ -20,6 +20,8 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,12 +59,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -74,23 +78,37 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AgeTests.cs" />
-    <Compile Include="DateHelperTests.cs" />
+    <Compile Include="Helper\DateHelperTests.cs" />
     <Compile Include="DemoTests.cs" />
-    <Compile Include="PayDanHelperTests.cs" />
+    <Compile Include="Repository\system\clsParametersTests.cs" />
+    <Compile Include="Service\EditLessonRndServiceTests.cs" />
+    <Compile Include="Service\LessonCopyNewDateHandlerTests.cs" />
+    <Compile Include="Service\LessonServiceTests.cs" />
+    <Compile Include="Service\TableColmunsServiceTests.cs" />
+    <Compile Include="Helper\PayDanHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CourseMng\clsEducationLecturerTests.cs" />
+    <Compile Include="Stub\clsParameterStub.cs" />
     <Compile Include="Stub\DateHelperStub.cs" />
-    <Compile Include="VacToolsTests.cs" />
+    <Compile Include="Factory\MockFactorys.cs" />
+    <Compile Include="Stub\clsLessonStub.cs" />
+    <Compile Include="Helper\VacToolsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\AIET\開發基本架構\Aiet_MySQL\Aiet_MySQL.csproj">
+      <Project>{94107c72-5277-4d5a-8e42-92c27cf16715}</Project>
+      <Name>Aiet_MySQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VacTools\VacTools.csproj">
-      <Project>{B94F36FB-6F26-4F43-97C5-FD506F1CEA7C}</Project>
+      <Project>{b94f36fb-6f26-4f43-97c5-fd506f1cea7c}</Project>
       <Name>VacTools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -117,8 +135,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.props'))" />
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

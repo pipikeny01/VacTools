@@ -8,6 +8,16 @@ namespace VacWebSiteTools
 {
     public class Demo
     {
+        public Demo()
+        {
+
+        }
+
+        public Demo(string test):this()
+        {
+
+        }
+
         private int _baseNumber = 2;
         public int Fun1()
         {

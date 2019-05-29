@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.IO;
 using aiet.Tools;
+using MySql.Data.MySqlClient;
 
 /// <summary>
 /// logError 的摘要描述
@@ -111,7 +112,7 @@ public class logError
 
     public void Write(object[] parameters)
     {
-        SqlConnection SqlCnt = null;
+        MySqlConnection SqlCnt = null;
         int errCode = 999; //--例外發生
         Exception ex = null;
         string sql = "";
@@ -162,7 +163,7 @@ public class logError
                 {
                     errMsg = string.Format("<script type='text/javascript'>alert('發生錯誤，訊息將顯示於網頁頂端'); </script><div style='background-color:#ffffff;color:red;'> 錯誤訊息:{0}</div>", errMsg);
                     HttpContext.Current.Response.Write(errMsg);
-                    return;
+                    //return;
                 }
             }
             #endregion
@@ -170,9 +171,9 @@ public class logError
 
             //-- 此處不可以直接用 myDB 的method，需另外的 SqlCommand； 否則會無窮迴圈
 
-            SqlCnt = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["sqlcn"].ConnectionString);
+            SqlCnt = new MySqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["sqlcn"].ConnectionString);
             SqlCnt.Open();
-            SqlCommand cmd = new SqlCommand();
+            var cmd = new MySqlCommand();
             cmd.Connection = SqlCnt;
             cmd.CommandText = "INSERT INTO LogError(ErrorTime,ErrorCode,ErrorMsg,url,ip,SourceID) VALUES(now(),@errCode,@errMsg,@url,@ip,@source)";
             cmd.Parameters.AddWithValue("errCode", errCode);
@@ -181,8 +182,8 @@ public class logError
             cmd.Parameters.AddWithValue("ip", ip);
             cmd.Parameters.AddWithValue("source", source);
             cmd.ExecuteNonQuery();
-            cmd.CommandText ="SELECT IDENT_CURRENT('LogError')";
-            SqlDataReader Reader = cmd.ExecuteReader();
+            cmd.CommandText = "SELECT max(aid) from LogError";
+            MySqlDataReader Reader = cmd.ExecuteReader();
             if (Reader.HasRows)
             {
                 while (Reader.Read())

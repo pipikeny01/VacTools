@@ -169,18 +169,21 @@ CREATE TABLE [dbo].[{0}](
         }
     }
 
-    public string CombinWhereIn(ListItemCollection param, List<string> Values, string Pattern)
+    public Tuple<string, List<ListItem>> CombinWhereIn(string paraName, params string[] paras)
     {
-        StringBuilder sb = new StringBuilder();
         int i = 1;
-        foreach (var v in Values)
+        var items = new List<ListItem>();
+        StringBuilder sb = new StringBuilder();
+        foreach (var p in paras)
         {
-            sb.Append("@" + Pattern + i.ToString() + ",");
-            param.Add(new ListItem(Pattern + i.ToString(), v));
+            sb.AppendFormat("@{0}{1},", paraName, i);
+            items.Add(new ListItem(string.Concat(paraName, i), p));
+
             i++;
         }
 
-        return sb.ToString().TrimEnd(',');
+        return Tuple.Create(sb.ToString().TrimEnd(','), items);
     }
+
 
 }

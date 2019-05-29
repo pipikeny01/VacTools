@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VacWebSiteTools;
 
-namespace VacToolsTests
+namespace VacWebSiteTools.Tests
 {
     [TestClass()]
     public class AgeTests
@@ -19,7 +19,7 @@ namespace VacToolsTests
             var end = new DateTime(2019, 4, 15);
             var expected = 37;
             var result = ageHelper.CalculateAge(start, end);
-            Assert.AreEqual(expected, result.Years);
+            Assert.AreEqual(expected, result);
         }
 
     }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace VacWebSiteTools
 {
-    public class Age
+    public class Age : IAge
     {
         public int Years { set; get; }
         public int Months { set; get; }
         public int Days { set; get; }
 
-        public Age CalculateAge(DateTime birthDate, DateTime endDate)
+        public int CalculateAge(DateTime birthDate, DateTime endDate)
         {
             if (birthDate.Date > endDate.Date)
                 throw new ArgumentException("birthDate cannot be higher then endDate", "birthDate");
@@ -41,13 +41,11 @@ namespace VacWebSiteTools
             birthDate = birthDate.AddMonths(months);
 
             days = (endDate - birthDate).Days;
+            Years = years;
+            Months = months;
+            Days = days;
 
-            return new Age
-            {
-                Years = years,
-                Months = months,
-                Days = days
-            };
+            return years;
         }
 
     }

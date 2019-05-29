@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 
-public class clsEducation_level : BaseTable
+public class clsEducation_level : BaseTable, IclsEducation_level
 {
     public clsEducation_level()
     {
@@ -15,6 +15,16 @@ public class clsEducation_level : BaseTable
         pk = "aID";
         dfs = new DataFields("aID", "LevelText");
 
+    }
+
+
+    public List<ListItem> CustomForSelectItems()
+    {
+        this.itemConcat = false;
+        this.ItemsOrderByField = "Sort";
+        var items = this.Items.ToList();
+
+        return items;
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -10,6 +11,7 @@ namespace aiet.Base
     /// <summary>
     /// BaseTable 提供資料表物件底層功能 , 資料表物件請繼承此類別
     /// </summary>
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public abstract class BaseTable : myDB
     {
         protected ListItemCollection _params = new ListItemCollection();
@@ -22,6 +24,11 @@ namespace aiet.Base
         public string pk = "aid";
 
         #region property
+
+        /// <summary>
+        /// Items排序
+        /// </summary>
+        public string ItemsOrderByField { set; get; }
 
         protected DataView listName { set; get; }
 
@@ -57,6 +64,8 @@ namespace aiet.Base
         /// </summary>
         public bool itemConcat = true;
 
+        public bool ItemsAddEmptyItem { set; get; }
+
         /// <summary>
         /// items 屬性 查詢參數設定
         /// </summary>
@@ -84,22 +93,39 @@ namespace aiet.Base
                 var itemsDataView = GetItemsDataView();
 
                 _items = new ListItem[itemsDataView.Count + 1];
-                var li = new ListItem(OptionText, "");
-                _items.SetValue(li, 0);
+
+                var listItem = AddItemsEmptyItem();
+
                 for (var i = 0; i < itemsDataView.Count; i++)
                 {
                     if (itemConcat)
                     {
-                        li = SetItemsStringContact(itemsDataView, i);
+                        listItem = SetItemsStringContact(itemsDataView, i);
                     }
                     else
                     {
-                        li = new ListItem(itemsDataView[i]["NAME"].ToString(), itemsDataView[i]["NO"].ToString());
+                        listItem = new ListItem(itemsDataView[i]["NAME"].ToString(), itemsDataView[i]["NO"].ToString());
                     }
-                    _items.SetValue(li, i + 1);
+                    _items.SetValue(listItem, i + 1);
                 }
                 return _items;
             }
+        }
+
+        protected BaseTable()
+        {
+            this.ItemsAddEmptyItem = true;
+        }
+
+        protected virtual ListItem AddItemsEmptyItem()
+        {
+            var listItem = new ListItem();
+            if (!ItemsAddEmptyItem) return listItem;
+            listItem.Value = "";
+            listItem.Text = OptionText;
+            _items.SetValue(listItem, 0);
+
+            return listItem;
         }
 
         /// <summary>
@@ -114,7 +140,7 @@ namespace aiet.Base
                 itemsDataView = selectSQL(
                     SetItemsDataViewSql(), ItemsParams);
 
-                itemsDataView.Sort =itemsDataView.ToTable().Columns[0].ColumnName;
+                SortItemsDataView(itemsDataView);
             }
             else
             {
@@ -124,10 +150,18 @@ namespace aiet.Base
             return itemsDataView;
         }
 
+        protected virtual void SortItemsDataView(DataView itemsDataView)
+        {
+            if (string.IsNullOrEmpty(ItemsOrderByField))
+                itemsDataView.Sort = itemsDataView.ToTable().Columns[0].ColumnName;
+            else
+                itemsDataView.Sort = ItemsOrderByField;
+        }
+
         protected virtual string SetItemsDataViewSql()
         {
-            return string.Format("SELECT {0} as NO,{1} as  NAME FROM {2} where 1=1  {3} ", dfs.DataValue, dfs.DataText,
-                TableName, ItemsWhereString);
+            return string.Format("SELECT *, {0} as NO,{1} as  NAME FROM {2} where 1=1  {3} ", dfs.DataValue, dfs.DataText,
+                TableName, ItemsWhereString  );
         }
 
         protected virtual ListItem SetItemsStringContact(DataView itemsDataView, int i)
@@ -223,10 +257,6 @@ namespace aiet.Base
 
         #endregion property
 
-        public BaseTable()
-        {
-        }
-
         /// <summary>
         /// 取得NameField的值
         /// </summary>
@@ -271,6 +301,17 @@ namespace aiet.Base
         {
             this.selectText = string.Format("SELECT * FROM {0} ", TableName);
             return this.selectSQL();
+        }
+
+        /// <summary>
+        /// 刪除資料 , 參數id是pk
+        /// </summary>
+        /// <param name="id"></param>
+        public virtual void Delete(string id)
+        {
+            _params.Clear();
+            _params.Add(new ListItem(pk, id));
+            this.delSQL(string.Format("delete from {0} where {1}=@{1}", TableName, pk),_params);
         }
 
         /// <summary>
@@ -333,24 +374,6 @@ namespace aiet.Base
             return selectSQL(_params).Count == 0 ? false : true;
         }
 
-        /// <summary>
-        /// 依照語系檢查PK是否重複 , 當檢查重複的欄位非pk時才需檢查
-        /// </summary>
-        /// <param name="Lang"></param>
-        /// <param name="name"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public virtual bool ixExisted(string Lang, string name, string id)
-        {
-            _params.Clear();
-            _params.Add(new ListItem("LanNo", "zh-tw"));
-            _params.Add(new ListItem(NameField, name));
-            _params.Add(new ListItem(pk, id));
-
-            selectText = string.Format("SELECT * FROM {0} WHERE {1}=@{1} AND {2} <> @{2} and LanNo=@LanNo ", TableName, NameField, pk);
-            DataView dv = this.selectSQL(_params);
-            return (dv.Count > 0);
-        }
 
         /// <summary>
         /// IDENT_CURRENT

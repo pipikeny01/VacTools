@@ -15,7 +15,7 @@ namespace VacWebSiteTools.Tests
         public void Fun1Test()
         {
             //Arrange
-            var demo = new Demo();
+            var demo = new Demo("xxx");
             var excepted = 7;
             //Act
             var result = demo.Fun1();

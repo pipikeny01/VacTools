@@ -91,5 +91,44 @@ namespace VacWebSiteTools.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod()]
+        public void GetDateSkipHolidayTest輸入20190104是六日會跳過最後回傳0107()
+        {
+            //Arrange
+            var dateHelper = new DateHelper();
+            var date = new DateTime(2019, 1, 4);
+            var expected = new DateTime(2019, 1, 7);
+            //Act
+            var result = dateHelper.GetNextDateSkipHoliday(date);
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod()]
+        public void GetDateSkipHolidayTest輸入20190101是六日會跳過最後回傳0102()
+        {
+            //Arrange
+            var dateHelper = new DateHelper();
+            var date = new DateTime(2019, 1, 1);
+            var expected = new DateTime(2019, 1, 2);
+            //Act
+            var result = dateHelper.GetNextDateSkipHoliday(date);
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
+        [TestMethod()]
+        public void GetNextDateOnlyHolidayTest輸入20190107不是六日會跳過最後回傳01012()
+        {
+            //Arrange
+            var dateHelper = new DateHelper();
+            var date = new DateTime(2019, 1, 7);
+            var expected = new DateTime(2019, 1, 12);
+            //Act
+            var result = dateHelper.GetNextDateOnlyHoliday(date);
+            //Assert
+            Assert.AreEqual(expected, result);
+        }
     }
 }

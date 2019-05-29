@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aiet_DB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Aiet_DB.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.16.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,20 +56,62 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateHelper.cs" />
+    <Compile Include="Factory\HelperFactory.cs" />
+    <Compile Include="Helper\DateHelper.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Factory\RepositoryFactory.cs" />
+    <Compile Include="Helper\EnumContainer.cs" />
+    <Compile Include="Helper\GridViewTemplate.cs" />
+    <Compile Include="Helper\ImportPayDanHelper.cs" />
+    <Compile Include="Helper\ITeacherQualifi.cs" />
+    <Compile Include="Helper\TeacherQualifi.cs" />
+    <Compile Include="MyApp.cs" />
+    <Compile Include="MyResources.cs" />
+    <Compile Include="Repository\CourseMng\clsLesson.cs" />
+    <Compile Include="Repository\CourseMng\clsLessonRnd.cs" />
+    <Compile Include="Repository\CourseMng\clsLessonSetting.cs" />
+    <Compile Include="Repository\CourseMng\IclsEducationLecturer.cs" />
+    <Compile Include="Repository\system\IclsParameters.cs" />
+    <Compile Include="Service\BaseService.cs" />
+    <Compile Include="Helper\ITableColmunsService.cs" />
+    <Compile Include="Service\EditLessonRndService.cs" />
+    <Compile Include="Service\LessonService.cs" />
+    <Compile Include="Helper\TableColmunsHelper.cs" />
+    <Compile Include="interface\IAge.cs" />
     <Compile Include="interface\IDateHelper.cs" />
-    <Compile Include="IPayDanHelper.cs" />
-    <Compile Include="OTD\Age.cs" />
-    <Compile Include="PayDanHelper_v1.cs" />
-    <Compile Include="PayDanHelper.cs" />
-    <Compile Include="PayDanTitle.cs" />
-    <Compile Include="Repository\clsEducation_level.cs" />
-    <Compile Include="VacTools.cs" />
+    <Compile Include="interface\IPayDanHelper.cs" />
+    <Compile Include="Helper\Age.cs" />
+    <Compile Include="Helper\PayDanHelper_v1.cs" />
+    <Compile Include="Helper\PayDanHelper.cs" />
+    <Compile Include="Helper\PayDanTitle.cs" />
+    <Compile Include="ODT\TableColmuns.cs" />
+    <Compile Include="ODT\UserMaiilFields.cs" />
+    <Compile Include="ODT\Teacher.cs" />
+    <Compile Include="Repository\CourseMng\clsEducationLecRetire.cs" />
+    <Compile Include="Repository\CourseMng\clsEducationLecturer.cs" />
+    <Compile Include="Repository\CourseMng\clsEducation_level.cs" />
+    <Compile Include="Helper\VacTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\system\clsParameters.cs" />
+    <Compile Include="Repository\system\clsSerialFmt.cs" />
+    <Compile Include="Repository\CourseMng\NewLessonRKind.cs" />
+    <Compile Include="Repository\CourseMng\clsLessonR.cs" />
+    <Compile Include="Repository\CourseMng\clsLessonRKind.cs" />
+    <Compile Include="Repository\CourseMng\IclsEducation_level.cs" />
+    <Compile Include="Repository\PayDan\IclsPayDanDetail.cs" />
+    <Compile Include="Repository\PayDan\IclsPayDanLecturer.cs" />
+    <Compile Include="Repository\PayDan\clsPayDan.cs" />
+    <Compile Include="Repository\PayDan\clsPayDanDetail.cs" />
+    <Compile Include="Repository\PayDan\clsPayDanLecturer.cs" />
+    <Compile Include="Repository\system\clsRSA.cs" />
+    <Compile Include="Repository\system\SuperuserRepository.cs" />
+    <Compile Include="TestResourse.cs" />
     <Compile Include="WebSiteClass\BaseTable.cs" />
     <Compile Include="WebSiteClass\logError.cs" />
     <Compile Include="WebSiteClass\logEvent.cs" />
@@ -73,15 +121,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\AIET\開發基本架構\aietTools\aietTools.csproj">
-      <Project>{ce4902e3-edcb-44cc-9a23-8f237e1ce9ad}</Project>
-      <Name>aietTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\AIET\開發基本架構\Aiet_MySQL\Aiet_MySQL.csproj">
-      <Project>{94107c72-5277-4d5a-8e42-92c27cf16715}</Project>
-      <Name>Aiet_MySQL</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參考這部電腦上所缺少的 NuGet 封裝。請啟用 NuGet 封裝還原，以下載該封裝。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>
